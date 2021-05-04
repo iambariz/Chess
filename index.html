@@ -5,7 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chess game</title>
+
+    <style>
+        .zone {
+            height: 50px;
+            width: 50px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px;
+            grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
+            gap: 0px 0px;
+            grid-template-areas:
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . ."
+                ". . . . . . . .";
+
+            max-width: 400px;
+            border: 2px solid #000;
+        }
+    </style>
 </head>
 
 <body>
