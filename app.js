@@ -42,18 +42,24 @@ class Figure {
         this.y = y;
         this.color = color;
         this.img = img;
+        boardObj.activeFigures.push(this);
     }
 
     get position() {
-        return (this.y - 1) * 8 + this.x
+        return (this.y - 1) * 8 + this.x;
     }
 
-    move(newX, newY) {
+    move(lastPos, newX, newY) {
 
     }
     display() {
+        const figure = document.createElement('i');
+        zones[this.position - 1].innerHTML = "&#xf447";
 
+        zones[this.position - 1].appendChild(figure);
     }
+
+
 }
 
 class Rook extends Figure {
@@ -62,9 +68,19 @@ class Rook extends Figure {
     }
 
 }
-const board = new Board;
-board.generate();
+const boardObj = new Board;
+boardObj.generate();
+const board = document.querySelector('.board');
+const zones = board.childNodes;
 
-const test = new Rook(2, 2, "&#xf447", "white");
-console.log(board);
+
+const test = new Rook(2, 2, "f447", "white");
+const test1 = new Rook(2, 2, "f447", "white");
+const test2 = new Rook(2, 2, "f447", "white");
+const test3 = new Rook(2, 2, "f447", "white");
+const test4 = new Rook(2, 2, "f447", "white");
+const test5 = new Rook(2, 2, "f447", "white");
+console.log(test.position);
+console.log(test.display());
+console.log(boardObj.activeFigures);
 console.log(test);
