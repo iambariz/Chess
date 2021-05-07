@@ -3,6 +3,7 @@ class Board {
         const board = document.createElement('div');
         board.classList.add("board");
         document.body.appendChild(board);
+        this.activeFigures = [];
     }
     generate() {
         for (let i = 0; i < 8; i++) {
@@ -80,7 +81,5 @@ const test2 = new Rook(2, 2, "f447", "white");
 const test3 = new Rook(2, 2, "f447", "white");
 const test4 = new Rook(2, 2, "f447", "white");
 const test5 = new Rook(2, 2, "f447", "white");
-console.log(test.position);
-console.log(test.display());
+
 console.log(boardObj.activeFigures);
-console.log(test);
