@@ -10,16 +10,19 @@ class Board {
             for (let j = 0; j < 8; j++) {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
-                        this.createZone("white");
+                        //white
+                        this.createZone("#ccb083");
                     } else {
-                        this.createZone("black");
+                        //black
+                        this.createZone("#573a2e");
                     }
                 } else {
                     if (j % 2 != 0) {
-                        this.createZone("white");
-
+                        //white
+                        this.createZone("#ccb083");
                     } else {
-                        this.createZone("black");
+                        //black
+                        this.createZone("#573a2e");
                     }
                 }
             }
@@ -55,8 +58,7 @@ class Figure {
     }
     display() {
         const figure = document.createElement('i');
-        zones[this.position - 1].innerHTML = "&#xf447";
-
+        figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
     }
 
@@ -75,11 +77,15 @@ const board = document.querySelector('.board');
 const zones = board.childNodes;
 
 
-const test = new Rook(2, 2, "f447", "white");
-const test1 = new Rook(2, 2, "f447", "white");
-const test2 = new Rook(2, 2, "f447", "white");
-const test3 = new Rook(2, 2, "f447", "white");
-const test4 = new Rook(2, 2, "f447", "white");
-const test5 = new Rook(2, 2, "f447", "white");
+const test = new Rook(2, 2, "rook", "white");
+const test1 = new Rook(4, 8, "rook", "black");
+const test2 = new Rook(2, 8, "rook", "white");
+const test3 = new Rook(3, 2, "rook", "black");
+const test4 = new Rook(2, 1, "rook", "white");
+const test5 = new Rook(5, 2, "rook", "black");
 
 console.log(boardObj.activeFigures);
+
+boardObj.activeFigures.forEach(figure => {
+    figure.display();
+});
