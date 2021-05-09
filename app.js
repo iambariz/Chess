@@ -1,3 +1,5 @@
+const selected = false;
+
 class Board {
     constructor() {
         const board = document.createElement('div');
@@ -68,6 +70,23 @@ class Figure {
 class Rook extends Figure {
     super(x, y, img, color) {
 
+    }
+
+    moveChecker(newX, newY) {
+        if (this.color == "white") {
+            if (this.x - 1 == newX) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (this.color == "black") {
+            if (this.x + 1 == newX) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 }
