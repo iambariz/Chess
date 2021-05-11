@@ -1,5 +1,3 @@
-const selected = false;
-
 class Board {
     constructor() {
         const board = document.createElement('div');
@@ -62,15 +60,21 @@ class Figure {
         const figure = document.createElement('i');
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
+        figure.addEventListener('click', function () {
+            console.log("Works");
+        })
     }
 
 
 }
 
 class Rook extends Figure {
-    super(x, y, img, color) {
 
+    constructor(x, y, img, color) {
+        super(x, y, img, color);
+        this.active = false;
     }
+
 
     moveChecker(newX, newY) {
         if (this.color == "white") {
@@ -102,6 +106,7 @@ const test2 = new Rook(2, 8, "rook", "white");
 const test3 = new Rook(3, 2, "rook", "black");
 const test4 = new Rook(2, 1, "rook", "white");
 const test5 = new Rook(5, 2, "rook", "black");
+
 
 console.log(boardObj.activeFigures);
 
