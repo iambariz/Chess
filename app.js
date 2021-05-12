@@ -63,16 +63,15 @@ class Figure {
             return
         } else {
             let cordinate = e.currentTarget.dataset.id;
-
-            cordinate = cordinate.split('');
-            if (cordinate.length == 1) {
-                cordinate.unshift("0");
-                this.x = cordinate[0];
+            this.x = cordinate % 8 + 1;
+            if (Math.floor(cordinate / 8) == 0) {
+                this.y = 1;
             } else {
-                this.x = cordinate[0] - 1;
-
+                this.y = Math.floor(cordinate / 8);
             }
-            this.y = cordinate[1] - 1;
+            console.log(this.y);
+            console.log(this.x);
+            console.log(this.position);
         }
     }
 
