@@ -57,32 +57,42 @@ class Figure {
         return (this.y - 1) * 8 + this.x;
     }
 
-    move(lastPos, newX, newY) {
-
+    move(active, e) {
+        e.stopPropagation();
+        if (e.currentTarget == active) {
+            return
+        } else {
+            console.log(e.currentTarget);
+        }
     }
+
     display() {
         const figure = document.createElement('i');
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
+        let obj = this;
         figure.addEventListener('click', function () {
+
             this.active = true;
             const active = this.parentNode;
             const zones = document.querySelectorAll('.zone');
             zones.forEach(zone => {
-                zone.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    if (e.currentTarget == active) {
-                        return
-                    } else {
-                        console.log(e.currentTarget);
-                    }
-                })
+                zone.addEventListener('click', obj.move.bind(obj, active))
+
             });
 
         })
     }
-
-
+    /*
+                    zone.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        if (e.currentTarget == active) {
+                            return
+                        } else {
+                            console.log(e.currentTarget);
+                        }
+                    })
+                    */
 }
 
 class Rook extends Figure {
