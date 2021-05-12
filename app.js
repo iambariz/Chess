@@ -6,33 +6,36 @@ class Board {
         this.activeFigures = [];
     }
     generate() {
+        let counter = 0;
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
                         //white
-                        this.createZone("#ccb083");
+                        this.createZone("#ccb083", counter);
                     } else {
                         //black
-                        this.createZone("#573a2e");
+                        this.createZone("#573a2e", counter);
                     }
                 } else {
                     if (j % 2 != 0) {
                         //white
-                        this.createZone("#ccb083");
+                        this.createZone("#ccb083", counter);
                     } else {
                         //black
-                        this.createZone("#573a2e");
+                        this.createZone("#573a2e", counter);
                     }
                 }
+                counter++;
             }
         }
     }
 
-    createZone(color) {
+    createZone(color, id) {
         const board = document.querySelector('.board');
         const div = document.createElement("div");
         div.style.backgroundColor = color;
+        div.dataset.id = id;
         div.classList.add("zone");
         board.appendChild(div);
     }
