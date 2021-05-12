@@ -46,6 +46,7 @@ class Figure {
         this.y = y;
         this.color = color;
         this.img = img;
+        this.active = false;
         boardObj.activeFigures.push(this);
     }
 
@@ -61,7 +62,16 @@ class Figure {
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
         figure.addEventListener('click', function () {
-            console.log("Works");
+            this.active = true;
+            const zones = document.querySelectorAll('.zone');
+            console.log(zones);
+            zones.forEach(zone => {
+                zone.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    console.log(e.currentTarget);
+                })
+            });
+
         })
     }
 
@@ -72,7 +82,6 @@ class Rook extends Figure {
 
     constructor(x, y, img, color) {
         super(x, y, img, color);
-        this.active = false;
     }
 
 
