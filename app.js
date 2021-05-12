@@ -66,12 +66,16 @@ class Figure {
         zones[this.position - 1].appendChild(figure);
         figure.addEventListener('click', function () {
             this.active = true;
+            const active = this.parentNode;
             const zones = document.querySelectorAll('.zone');
-            console.log(zones);
             zones.forEach(zone => {
                 zone.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    console.log(e.currentTarget);
+                    if (e.currentTarget == active) {
+                        return
+                    } else {
+                        console.log(e.currentTarget);
+                    }
                 })
             });
 
