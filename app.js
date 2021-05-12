@@ -62,7 +62,17 @@ class Figure {
         if (e.currentTarget == active) {
             return
         } else {
-            console.log(e.currentTarget);
+            let cordinate = e.currentTarget.dataset.id;
+
+            cordinate = cordinate.split('');
+            if (cordinate.length == 1) {
+                cordinate.unshift("0");
+                this.x = cordinate[0];
+            } else {
+                this.x = cordinate[0] - 1;
+
+            }
+            this.y = cordinate[1] - 1;
         }
     }
 
@@ -78,7 +88,6 @@ class Figure {
             const zones = document.querySelectorAll('.zone');
             zones.forEach(zone => {
                 zone.addEventListener('click', obj.move.bind(obj, active))
-
             });
 
         })
