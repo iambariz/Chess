@@ -57,7 +57,7 @@ class Figure {
         return (this.y - 1) * 8 + this.x;
     }
 
-    move(active, e) {
+    move(active, element, e) {
         e.stopPropagation();
         if (e.currentTarget == active) {
             return
@@ -67,11 +67,10 @@ class Figure {
             if (Math.floor(cordinate / 8) == 0) {
                 this.y = 1;
             } else {
-                this.y = Math.floor(cordinate / 8);
+                this.y = Math.floor(cordinate / 8) + 1;
             }
-            console.log(this.y);
-            console.log(this.x);
-            console.log(this.position);
+            //console.log(this.position);
+            zones[this.position - 1].appendChild(element);
         }
     }
 
@@ -81,26 +80,17 @@ class Figure {
         zones[this.position - 1].appendChild(figure);
         let obj = this;
         figure.addEventListener('click', function () {
-
+            figure.classList.add("active");
             this.active = true;
             const active = this.parentNode;
             const zones = document.querySelectorAll('.zone');
             zones.forEach(zone => {
-                zone.addEventListener('click', obj.move.bind(obj, active))
+                zone.addEventListener('click', obj.move.bind(obj, active, figure))
             });
 
         })
     }
-    /*
-                    zone.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        if (e.currentTarget == active) {
-                            return
-                        } else {
-                            console.log(e.currentTarget);
-                        }
-                    })
-                    */
+
 }
 
 class Rook extends Figure {
