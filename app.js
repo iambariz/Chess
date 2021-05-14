@@ -59,18 +59,33 @@ class Figure {
 
     move(active, element, e) {
         e.stopPropagation();
+        //Prevent multiple listeners
         if (e.currentTarget == active) {
             return
         } else {
+            //The magic happens here
             let cordinate = e.currentTarget.dataset.id;
-            this.x = cordinate % 8 + 1;
+            let newX = cordinate % 8 + 1;
+            let newY = 0;
             if (Math.floor(cordinate / 8) == 0) {
-                this.y = 1;
+                newY = 1;
             } else {
-                this.y = Math.floor(cordinate / 8) + 1;
+                newY = Math.floor(cordinate / 8) + 1;
             }
-            //console.log(this.position);
-            zones[this.position - 1].appendChild(element);
+            const checker = this.moveChecker(newX, newY);
+            if (checker == true) {
+                this.x = newX;
+                this.y = newY;
+                zones[this.position - 1].appendChild(element);
+                element.classList.remove("active");
+                zones.forEach(zone => {
+                    zone.removeEventListener('click', prefix);
+                });
+
+            } else {
+                //Failed movement
+            }
+
         }
     }
 
@@ -84,10 +99,10 @@ class Figure {
             this.active = true;
             const active = this.parentNode;
             const zones = document.querySelectorAll('.zone');
+            prefix = obj.move.bind(obj, active, figure);
             zones.forEach(zone => {
-                zone.addEventListener('click', obj.move.bind(obj, active, figure))
+                zone.addEventListener('click', prefix);
             });
-
         })
     }
 
@@ -101,15 +116,16 @@ class Rook extends Figure {
 
 
     moveChecker(newX, newY) {
+        //Move functions
         if (this.color == "white") {
-            if (this.x - 1 == newX) {
+            if (this.y - 1 == newY && this.x == newX) {
                 return true;
             } else {
                 return false;
             }
         }
         if (this.color == "black") {
-            if (this.x + 1 == newX) {
+            if (this.y + 1 == newY && this.x == newX) {
                 return true;
             } else {
                 return false;
@@ -122,7 +138,7 @@ const boardObj = new Board;
 boardObj.generate();
 const board = document.querySelector('.board');
 const zones = board.childNodes;
-
+let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 
 const test = new Rook(2, 2, "rook", "white");
 const test1 = new Rook(4, 8, "rook", "black");
