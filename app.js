@@ -94,7 +94,7 @@ class Figure {
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
         let obj = this;
-        figure.addEventListener('click', function () {
+        figure.addEventListener('click', function (e) {
             if (selected == false) {
                 selected = true;
                 figure.classList.add("active");
@@ -105,8 +105,8 @@ class Figure {
                 zones.forEach(zone => {
                     zone.addEventListener('click', prefix);
                 });
-            } else {
-                console.log(figure);
+            } else if (e.currentTarget.classList.contains(obj.color)) {
+                //If the player want to switch characters
             }
         })
     }
