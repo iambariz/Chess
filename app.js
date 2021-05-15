@@ -95,14 +95,19 @@ class Figure {
         zones[this.position - 1].appendChild(figure);
         let obj = this;
         figure.addEventListener('click', function () {
-            figure.classList.add("active");
-            this.active = true;
-            const active = this.parentNode;
-            const zones = document.querySelectorAll('.zone');
-            prefix = obj.move.bind(obj, active, figure);
-            zones.forEach(zone => {
-                zone.addEventListener('click', prefix);
-            });
+            if (selected == false) {
+                selected = true;
+                figure.classList.add("active");
+                this.active = true;
+                const active = this.parentNode;
+                const zones = document.querySelectorAll('.zone');
+                prefix = obj.move.bind(obj, active, figure);
+                zones.forEach(zone => {
+                    zone.addEventListener('click', prefix);
+                });
+            } else {
+                console.log(figure);
+            }
         })
     }
 
@@ -139,6 +144,7 @@ boardObj.generate();
 const board = document.querySelector('.board');
 const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
+let selected = false;
 
 const test = new Rook(2, 2, "rook", "white");
 const test1 = new Rook(4, 8, "rook", "black");
