@@ -72,7 +72,7 @@ class Figure {
             } else {
                 newY = Math.floor(cordinate / 8) + 1;
             }
-            const checker = this.moveChecker(newX, newY);
+            const checker = this.moveChecker(newX, newY, e);
             if (checker == true) {
                 this.x = newX;
                 this.y = newY;
@@ -84,8 +84,7 @@ class Figure {
                 selected = false;
             } else {
                 //Failed movement
-                selected = false;
-
+                return
             }
 
         }
@@ -122,11 +121,16 @@ class Rook extends Figure {
     }
 
 
-    moveChecker(newX, newY) {
+    moveChecker(newX, newY, e) {
+        console.log(e.currentTarget.childNodes)
         //Move functions
         if (this.color == "white") {
             if (this.y - 1 == newY && this.x == newX) {
                 return true;
+            } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
+                if (e.currentTarget.childNodes[0].classList.contains("black")) {
+
+                }
             } else {
                 return false;
             }
