@@ -43,8 +43,12 @@ class Board {
         board.appendChild(div);
     }
 
-    static removeFigure(cordinates) {
-        console.log(cordinates)
+    static removeFigure(cordinate, arr) {
+        for (let i = 0; i < arr.length; i++) {
+            if (cordinate == arr[i].position) {
+                arr.splice(i, 1);
+            }
+        }
     }
 
     //activeFigures = [];
@@ -138,8 +142,11 @@ class Rook extends Figure {
             if (this.y - 1 == newY && this.x == newX) {
                 return true;
             } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
-                if (e.currentTarget.childNodes[0].classList.contains("black")) {
-                    console.log("succes");
+                const target = e.currentTarget;
+                if (target.childNodes[0].classList.contains("black")) {
+                    let cordinate = e.currentTarget.dataset.id;
+                    Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[1]);
+                    target.removeChild(target.childNodes[0]);
                     return true;
                 }
             } else {
@@ -169,13 +176,15 @@ const test2 = new Rook(2, 8, "rook", "white");
 const test3 = new Rook(3, 2, "rook", "black");
 const test4 = new Rook(2, 1, "rook", "white");
 const test5 = new Rook(5, 2, "rook", "black");
+const test6 = new Rook(3, 7, "rook", "black");
 
 
 console.log(boardObj.activeFigures);
-
+//black
 boardObj.activeFigures[1].forEach(figure => {
     figure.display();
 });
+//white
 boardObj.activeFigures[0].forEach(figure => {
     figure.display();
 });
