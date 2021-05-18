@@ -139,10 +139,12 @@ class Rook extends Figure {
     moveChecker(newX, newY, e) {
         //Move functions
         if (this.color == "white") {
+            const target = e.currentTarget;
             if (this.y - 1 == newY && this.x == newX) {
-                return true;
+                if (target.childNodes.length < 1) {
+                    return true;
+                }
             } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
-                const target = e.currentTarget;
                 if (target.childNodes[0].classList.contains("black")) {
                     let cordinate = e.currentTarget.dataset.id;
                     Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[1]);
