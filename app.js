@@ -81,9 +81,11 @@ class Figure {
                 zones.forEach(zone => {
                     zone.removeEventListener('click', prefix);
                 });
-
+                selected = false;
             } else {
                 //Failed movement
+                selected = false;
+
             }
 
         }
