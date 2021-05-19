@@ -104,7 +104,8 @@ class Figure {
 
         }
     }
-
+    //Display, getting called straight away, and also 
+    //Attaches the click event
     display() {
         const figure = document.createElement('i');
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
@@ -115,14 +116,17 @@ class Figure {
                 selected = true;
                 figure.classList.add("active");
                 this.active = true;
-                const active = this.parentNode;
+                active = this.parentNode;
                 const zones = document.querySelectorAll('.zone');
                 prefix = obj.move.bind(obj, active, figure);
                 zones.forEach(zone => {
                     zone.addEventListener('click', prefix);
                 });
             } else if (e.currentTarget.classList.contains(obj.color)) {
-                //If the player want to switch characters
+                active.childNodes[0].classList.remove('active')
+                console.log(active);
+                /// prefix = obj.move.bind(obj, active, figure); Not working currently
+
             }
         })
     }
@@ -171,6 +175,7 @@ const board = document.querySelector('.board');
 const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 let selected = false;
+let active = undefined;
 
 const test = new Rook(2, 2, "rook", "white");
 const test1 = new Rook(4, 8, "rook", "black");
