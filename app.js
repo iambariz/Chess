@@ -130,17 +130,20 @@ class Figure {
                 zones.forEach(zone => {
                     zone.removeEventListener('click', prefix);
                 });
+                active = e.currentTarget.parentNode;
+                let figure = e.currentTarget;
+                figure.classList.add("active");
                 //Gather object
                 if (obj.color == "white") {
                     for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
                         const element = boardObj.activeFigures[0][i];
-                        //     zones[this.position - 1].appendChild(element);
-                        console.log(element.position);
+                        if (element.position == parseInt(active.dataset.id) + 1) {
+                            console.log("works")
+                            prefix = element.move.bind(element, active, figure)
+                        }
                     }
                 }
-                active = this.parentNode;
-                prefix =
-                    selected = false;
+                selected = false;
                 // prefix = obj.move.bind(obj, active, figure); Not working currently
 
             }
@@ -200,9 +203,10 @@ const test3 = new Rook(3, 2, "rook", "black");
 const test4 = new Rook(2, 1, "rook", "white");
 const test5 = new Rook(5, 2, "rook", "black");
 const test6 = new Rook(3, 7, "rook", "black");
+const test7 = new Rook(1, 8, "rook", "white");
 
 
-console.log(boardObj.activeFigures);
+
 //black
 boardObj.activeFigures[1].forEach(figure => {
     figure.display();
