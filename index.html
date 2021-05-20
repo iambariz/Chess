@@ -11,6 +11,8 @@
 
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cutive&display=swap');
+
         .zone {
             height: 50px;
             width: 50px;
@@ -39,6 +41,7 @@
         .board {
             margin: 0 auto;
             display: grid;
+            position: relative;
             grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px;
             grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px;
             gap: 0px 0px;
@@ -54,6 +57,19 @@
 
             max-width: 400px;
             border: 2px solid #000;
+        }
+
+        .display {
+            position: absolute;
+            bottom: -4rem;
+            left: 50%;
+            width: 20rem;
+            transform: translateX(-50%);
+            text-transform: uppercase;
+            font-size: 1.4rem;
+            text-align: center;
+            font-family: 'Cutive', serif;
+            padding-top: 2rem;
         }
     </style>
 </head>

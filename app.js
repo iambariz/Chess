@@ -32,6 +32,11 @@ class Board {
                 counter++;
             }
         }
+        const board = document.querySelector('.board');
+        const display = document.createElement("div");
+        display.classList.add("display");
+        display.textContent = "White's turn";
+        board.appendChild(display);
     }
 
     createZone(color, id) {
@@ -49,6 +54,10 @@ class Board {
                 arr.splice(i, 1);
             }
         }
+    }
+
+    static toggleRound() {
+
     }
 
     //activeFigures = [];
@@ -138,7 +147,6 @@ class Figure {
                     for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
                         const element = boardObj.activeFigures[0][i];
                         if (element.position == parseInt(active.dataset.id) + 1) {
-                            console.log("works")
                             prefix = element.move.bind(element, active, figure)
                         }
                     }
