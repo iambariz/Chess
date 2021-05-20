@@ -111,6 +111,7 @@ class Figure {
         figure.classList.add("fas", `fa-chess-${this.img}`, this.color);
         zones[this.position - 1].appendChild(figure);
         let obj = this;
+        //Basic move handler below
         figure.addEventListener('click', function (e) {
             if (selected == false) {
                 selected = true;
@@ -118,14 +119,29 @@ class Figure {
                 this.active = true;
                 active = this.parentNode;
                 const zones = document.querySelectorAll('.zone');
+                //OBJ = Object, Active = Zone, Figure = Figure element
                 prefix = obj.move.bind(obj, active, figure);
                 zones.forEach(zone => {
                     zone.addEventListener('click', prefix);
                 });
+                //If player clicks on something, what's the same color as the last el
             } else if (e.currentTarget.classList.contains(obj.color)) {
-                active.childNodes[0].classList.remove('active')
-                console.log(active);
-                /// prefix = obj.move.bind(obj, active, figure); Not working currently
+                active.childNodes[0].classList.remove('active');
+                zones.forEach(zone => {
+                    zone.removeEventListener('click', prefix);
+                });
+                //Gather object
+                if (obj.color == "white") {
+                    for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
+                        const element = boardObj.activeFigures[0][i];
+                        //     zones[this.position - 1].appendChild(element);
+                        console.log(element.position);
+                    }
+                }
+                active = this.parentNode;
+                prefix =
+                    selected = false;
+                // prefix = obj.move.bind(obj, active, figure); Not working currently
 
             }
         })
