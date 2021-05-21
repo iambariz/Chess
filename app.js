@@ -155,6 +155,13 @@ class Figure {
                             prefix = element.move.bind(element, active, figure)
                         }
                     }
+                } else {
+                    for (let i = 0; i < boardObj.activeFigures[1].length; i++) {
+                        const element = boardObj.activeFigures[1][i];
+                        if (element.position == parseInt(active.dataset.id) + 1) {
+                            prefix = element.move.bind(element, active, figure)
+                        }
+                    }
                 }
                 selected = false;
                 // prefix = obj.move.bind(obj, active, figure); Not working currently
@@ -173,9 +180,9 @@ class Rook extends Figure {
 
 
     moveChecker(newX, newY, e) {
+        const target = e.currentTarget;
         //Move functions
         if (this.color == "white") {
-            const target = e.currentTarget;
             if (this.y - 1 == newY && this.x == newX) {
                 if (target.childNodes.length < 1) {
                     return true;
@@ -193,7 +200,16 @@ class Rook extends Figure {
         }
         if (this.color == "black") {
             if (this.y + 1 == newY && this.x == newX) {
-                return true;
+                if (target.childNodes.length < 1) {
+                    return true;
+                }
+            } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
+                if (target.childNodes[0].classList.contains("white")) {
+                    let cordinate = e.currentTarget.dataset.id;
+                    Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[0]);
+                    target.removeChild(target.childNodes[0]);
+                    return true;
+                }
             } else {
                 return false;
             }
@@ -208,7 +224,7 @@ const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 let selected = false;
 let active = undefined;
-let turn = white;
+let turn = "white";
 
 const test = new Rook(2, 2, "rook", "white");
 const test1 = new Rook(4, 8, "rook", "black");
