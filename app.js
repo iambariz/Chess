@@ -57,7 +57,12 @@ class Board {
     }
 
     static toggleRound() {
-
+        const display = document.querySelector(".display");
+        if (turn == white) {
+            display.textContent = "White's turn";
+        } else {
+            display.textContent = "Black's turn";
+        }
     }
 
     //activeFigures = [];
@@ -203,6 +208,7 @@ const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 let selected = false;
 let active = undefined;
+let turn = white;
 
 const test = new Rook(2, 2, "rook", "white");
 const test1 = new Rook(4, 8, "rook", "black");
