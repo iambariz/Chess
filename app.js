@@ -147,23 +147,28 @@ class Figure {
                 active = e.currentTarget.parentNode;
                 let figure = e.currentTarget;
                 figure.classList.add("active");
-                //Gather object
+                //When changing figures, it re binds the moving functionn
                 if (obj.color == "white") {
                     for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
                         const element = boardObj.activeFigures[0][i];
                         if (element.position == parseInt(active.dataset.id) + 1) {
-                            prefix = element.move.bind(element, active, figure)
+                            prefix = element.move.bind(element, active, figure);
+                            zones.forEach(zone => {
+                                zone.addEventListener('click', prefix);
+                            });
                         }
                     }
-                } else {
+                } else if (obj.color == "black") {
                     for (let i = 0; i < boardObj.activeFigures[1].length; i++) {
                         const element = boardObj.activeFigures[1][i];
                         if (element.position == parseInt(active.dataset.id) + 1) {
-                            prefix = element.move.bind(element, active, figure)
+                            prefix = element.move.bind(element, active, figure);
+                            zones.forEach(zone => {
+                                zone.addEventListener('click', prefix);
+                            });
                         }
                     }
                 }
-                selected = false;
                 // prefix = obj.move.bind(obj, active, figure); Not working currently
 
             }
@@ -192,6 +197,7 @@ class Rook extends Figure {
                     let cordinate = e.currentTarget.dataset.id;
                     Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[1]);
                     target.removeChild(target.childNodes[0]);
+                    selected = false;
                     return true;
                 }
             } else {
