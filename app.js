@@ -58,10 +58,12 @@ class Board {
 
     static toggleRound() {
         const display = document.querySelector(".display");
-        if (turn == white) {
-            display.textContent = "White's turn";
-        } else {
+        if (turn == "white") {
             display.textContent = "Black's turn";
+            turn = "black";
+        } else {
+            display.textContent = "White's turn";
+            turn = "white";
         }
     }
 
@@ -111,6 +113,7 @@ class Figure {
                     zone.removeEventListener('click', prefix);
                 });
                 selected = false;
+                Board.toggleRound();
             } else {
                 //Failed movement
                 return
@@ -127,50 +130,51 @@ class Figure {
         let obj = this;
         //Basic move handler below
         figure.addEventListener('click', function (e) {
-            if (selected == false) {
-                selected = true;
-                figure.classList.add("active");
-                this.active = true;
-                active = this.parentNode;
-                const zones = document.querySelectorAll('.zone');
-                //OBJ = Object, Active = Zone, Figure = Figure element
-                prefix = obj.move.bind(obj, active, figure);
-                zones.forEach(zone => {
-                    zone.addEventListener('click', prefix);
-                });
-                //If player clicks on something, what's the same color as the last el
-            } else if (e.currentTarget.classList.contains(obj.color)) {
-                active.childNodes[0].classList.remove('active');
-                zones.forEach(zone => {
-                    zone.removeEventListener('click', prefix);
-                });
-                active = e.currentTarget.parentNode;
-                let figure = e.currentTarget;
-                figure.classList.add("active");
-                //When changing figures, it re binds the moving functionn
-                if (obj.color == "white") {
-                    for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
-                        const element = boardObj.activeFigures[0][i];
-                        if (element.position == parseInt(active.dataset.id) + 1) {
-                            prefix = element.move.bind(element, active, figure);
-                            zones.forEach(zone => {
-                                zone.addEventListener('click', prefix);
-                            });
+            if (obj.color == turn) {
+                if (selected == false) {
+                    selected = true;
+                    figure.classList.add("active");
+                    this.active = true;
+                    active = this.parentNode;
+                    const zones = document.querySelectorAll('.zone');
+                    //OBJ = Object, Active = Zone, Figure = Figure element
+                    prefix = obj.move.bind(obj, active, figure);
+                    zones.forEach(zone => {
+                        zone.addEventListener('click', prefix);
+                    });
+                    //If player clicks on something, what's the same color as the last el
+                } else if (e.currentTarget.classList.contains(obj.color)) {
+                    active.childNodes[0].classList.remove('active');
+                    zones.forEach(zone => {
+                        zone.removeEventListener('click', prefix);
+                    });
+                    active = e.currentTarget.parentNode;
+                    let figure = e.currentTarget;
+                    figure.classList.add("active");
+                    //When changing figures, it re binds the moving functionn
+                    if (obj.color == "white") {
+                        for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
+                            const element = boardObj.activeFigures[0][i];
+                            if (element.position == parseInt(active.dataset.id) + 1) {
+                                prefix = element.move.bind(element, active, figure);
+                                zones.forEach(zone => {
+                                    zone.addEventListener('click', prefix);
+                                });
+                            }
+                        }
+                    } else if (obj.color == "black") {
+                        for (let i = 0; i < boardObj.activeFigures[1].length; i++) {
+                            const element = boardObj.activeFigures[1][i];
+                            if (element.position == parseInt(active.dataset.id) + 1) {
+                                prefix = element.move.bind(element, active, figure);
+                                zones.forEach(zone => {
+                                    zone.addEventListener('click', prefix);
+                                });
+                            }
                         }
                     }
-                } else if (obj.color == "black") {
-                    for (let i = 0; i < boardObj.activeFigures[1].length; i++) {
-                        const element = boardObj.activeFigures[1][i];
-                        if (element.position == parseInt(active.dataset.id) + 1) {
-                            prefix = element.move.bind(element, active, figure);
-                            zones.forEach(zone => {
-                                zone.addEventListener('click', prefix);
-                            });
-                        }
-                    }
+                    // prefix = obj.move.bind(obj, active, figure); Not working currently
                 }
-                // prefix = obj.move.bind(obj, active, figure); Not working currently
-
             }
         })
     }
