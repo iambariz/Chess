@@ -196,7 +196,7 @@ class Rook extends Figure {
                 if (target.childNodes.length < 1) {
                     return true;
                 }
-            } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
+            } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX && this.y - 1 == newY) {
                 if (target.childNodes[0].classList.contains("black")) {
                     let cordinate = e.currentTarget.dataset.id;
                     Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[1]);
@@ -213,7 +213,7 @@ class Rook extends Figure {
                 if (target.childNodes.length < 1) {
                     return true;
                 }
-            } else if (this.y - 1 == newY && this.x + 1 == newX || this.x - 1 == newX) {
+            } else if (this.y + 1 == newY && this.x + 1 == newX || this.y + 1 == newY && this.x - 1 == newX) {
                 if (target.childNodes[0].classList.contains("white")) {
                     let cordinate = e.currentTarget.dataset.id;
                     Board.removeFigure(parseInt(cordinate) + 1, boardObj.activeFigures[0]);
@@ -236,14 +236,17 @@ let selected = false;
 let active = undefined;
 let turn = "white";
 
-const test = new Rook(2, 2, "rook", "white");
-const test1 = new Rook(4, 8, "rook", "black");
-const test2 = new Rook(2, 8, "rook", "white");
-const test3 = new Rook(3, 2, "rook", "black");
-const test4 = new Rook(2, 1, "rook", "white");
-const test5 = new Rook(5, 2, "rook", "black");
-const test6 = new Rook(3, 7, "rook", "black");
-const test7 = new Rook(1, 8, "rook", "white");
+
+//x - y - type - color
+const test1 = new Rook(1, 4, "rook", "black");
+const test3 = new Rook(3, 4, "rook", "black");
+const test2 = new Rook(2, 5, "rook", "white");
+const test4 = new Rook(4, 5, "rook", "white");
+const test11 = new Rook(5, 4, "rook", "black");
+const test33 = new Rook(7, 4, "rook", "black");
+const test22 = new Rook(6, 5, "rook", "white");
+const test44 = new Rook(8, 5, "rook", "white");
+
 
 
 
