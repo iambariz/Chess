@@ -227,6 +227,27 @@ class Rook extends Figure {
     }
 
 }
+
+class Bishop extends Figure {
+
+    constructor(x, y, img, color) {
+        super(x, y, img, color);
+    }
+
+    moveChecker(newX, newY, e) {
+        const target = e.currentTarget;
+        if (this.color == "white") {
+
+        }
+
+        if (this.color == "black") {
+
+        }
+
+    }
+}
+
+
 const boardObj = new Board;
 boardObj.generate();
 const board = document.querySelector('.board');
@@ -245,7 +266,7 @@ const test4 = new Rook(4, 5, "rook", "white");
 const test11 = new Rook(5, 4, "rook", "black");
 const test33 = new Rook(7, 4, "rook", "black");
 const test22 = new Rook(6, 5, "rook", "white");
-const test44 = new Rook(8, 5, "rook", "white");
+const test55 = new Bishop(8, 5, "bishop", "white");
 
 
 
