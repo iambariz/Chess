@@ -235,7 +235,15 @@ class Bishop extends Figure {
     }
 
     moveChecker(newX, newY, e) {
-        const target = e.currentTarget;
+        let cordinate = e.currentTarget.dataset.id;
+        let avaliableZones = [];
+        let newX = cordinate % 8 + 1;
+        let newY = 0;
+        if (Math.floor(cordinate / 8) == 0) {
+            newY = 1;
+        } else {
+            newY = Math.floor(cordinate / 8) + 1;
+        }
         if (this.color == "white") {
 
         }
