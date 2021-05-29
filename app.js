@@ -245,7 +245,14 @@ class Bishop extends Figure {
             newY = Math.floor(cordinate / 8) + 1;
         }
         if (this.color == "white") {
-
+            //X+ Y-
+            while () {}
+            //X+ Y+
+            while () {}
+            //X- Y-
+            while () {}
+            //X- Y+
+            while () {}
         }
 
         if (this.color == "black") {
