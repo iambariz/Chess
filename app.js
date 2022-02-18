@@ -87,14 +87,14 @@ class Figure {
 
 	//Check if array
 	exists(arr, search) {
-		console.log(arr);
-		console.log(search);
+		let excist = false;
 		for (let i = 0; i < arr.length; i++) {
-			if (arr[i][0][1] == search[0][1]) {
-				return true;
+			if (arr[i][0] == search[0] && arr[i][1] == search[1]) {
+				excist = true;
+				break;
 			}
-			return false;
 		}
+		return excist;
 	}
 
 	move(active, element, e) {
@@ -286,11 +286,15 @@ class Bishop extends Figure {
 		}
 		return avaliableSteps;
 	}
+	checkZone(current, target) {
+		// console.log(Math.abs(Math.abs(current[0]) - Math.abs(target[0]) - 1));
+	}
+
 	//Moving engine
 	moveChecker(newX, newY, e) {
 		let zones = this.avaliableZones();
 		let cordinate = e.currentTarget.dataset.id;
-		let zonesPair = [newX, newY];
+		let targetPos = [newX, newY];
 		//Prefix
 		if (Math.floor(cordinate / 8) == 0) {
 			newY = 1;
@@ -298,12 +302,20 @@ class Bishop extends Figure {
 			newY = Math.floor(cordinate / 8) + 1;
 		}
 		//Check if move is legal, bassed on an array of [x,y]
-		if (this.exists(zones, zonesPair)) {
+		if (this.exists(zones, targetPos)) {
 			//We need to determine first which direction is the piece going
-			if (this.color == "white") {
-			}
+			let currPos = [this.x, this.y];
+			// console.log(currPos);
+			let pathBlocked = false;
+			this.checkZone(currPos, targetPos);
+			if (pathBlocked == false) {
+				if (this.color == "white") {
+				}
 
-			if (this.color == "black") {
+				if (this.color == "black") {
+				}
+			} else {
+				return;
 			}
 		}
 	}
