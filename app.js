@@ -85,7 +85,7 @@ class Figure {
 		return (this.y - 1) * 8 + this.x;
 	}
 
-	//Check if array
+	//Check if array contains the targeted zone
 	exists(arr, search) {
 		let excist = false;
 		for (let i = 0; i < arr.length; i++) {
@@ -286,8 +286,97 @@ class Bishop extends Figure {
 		}
 		return avaliableSteps;
 	}
+	//Check the amount of zones between the curren and target
 	checkZone(current, target) {
-		// console.log(Math.abs(Math.abs(current[0]) - Math.abs(target[0]) - 1));
+		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
+		let xDir;
+		let yDir;
+		let scanZone = [current[0], current[1]];
+		let succesFull = true;
+
+		if (target[0] > current[0]) {
+			xDir = "plus";
+		} else {
+			xDir = "minus";
+		}
+		if (target[1] > current[1]) {
+			yDir = "plus";
+		} else {
+			yDir = "minus";
+		}
+		console.log("in");
+		if (xDir == "plus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]++;
+				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					console.log("Not found");
+				}
+			}
+		}
+
+		if (xDir == "minus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]--;
+				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "minus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]++;
+				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "plus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]--;
+				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					console.log("Not found");
+				}
+			}
+		}
+		// console.log(xDir, yDir);
+		// console.log(current, target);
+		// console.log(zonesBetween);
 	}
 
 	//Moving engine
@@ -306,15 +395,15 @@ class Bishop extends Figure {
 			//We need to determine first which direction is the piece going
 			let currPos = [this.x, this.y];
 			// console.log(currPos);
-			let pathBlocked = false;
 			this.checkZone(currPos, targetPos);
-			if (pathBlocked == false) {
+			if (false) {
 				if (this.color == "white") {
 				}
 
 				if (this.color == "black") {
 				}
 			} else {
+				// console.log("Yikes");
 				return;
 			}
 		}
@@ -339,6 +428,7 @@ let turn = "white";
 // const test33 = new Pawn(7, 4, "pawn", "black");
 // const test22 = new Pawn(6, 5, "pawn", "white");
 const test55 = new Bishop(4, 5, "bishop", "white");
+const test56 = new Bishop(5, 6, "bishop", "white");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
