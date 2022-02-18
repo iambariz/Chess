@@ -85,6 +85,18 @@ class Figure {
 		return (this.y - 1) * 8 + this.x;
 	}
 
+	//Check if array
+	exists(arr, search) {
+		console.log(arr);
+		console.log(search);
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i][0][1] == search[0][1]) {
+				return true;
+			}
+			return false;
+		}
+	}
+
 	move(active, element, e) {
 		e.stopPropagation();
 		//Prevent multiple listeners
@@ -236,13 +248,13 @@ class Bishop extends Figure {
 	constructor(x, y, img, color) {
 		super(x, y, img, color);
 	}
-
+	//Get avaliable zones
 	avaliableZones() {
 		let avaliableSteps = [];
 		//X+ Y-
 		let xCounter = this.x;
 		let yCounter = this.y;
-		console.log(this.x, this.y);
+		// console.log(this.x, this.y);
 		while (xCounter < 8 && yCounter > 1) {
 			xCounter++;
 			yCounter--;
@@ -274,27 +286,25 @@ class Bishop extends Figure {
 		}
 		return avaliableSteps;
 	}
-
+	//Moving engine
 	moveChecker(newX, newY, e) {
 		let zones = this.avaliableZones();
-		console.log(zones);
 		let cordinate = e.currentTarget.dataset.id;
-		newX = (cordinate % 8) + 1;
-		newY = 0;
+		let zonesPair = [newX, newY];
+		//Prefix
 		if (Math.floor(cordinate / 8) == 0) {
 			newY = 1;
 		} else {
 			newY = Math.floor(cordinate / 8) + 1;
 		}
+		//Check if move is legal, bassed on an array of [x,y]
+		if (this.exists(zones, zonesPair)) {
+			//We need to determine first which direction is the piece going
+			if (this.color == "white") {
+			}
 
-		if (this.color == "white") {
-			//X+ Y-
-			//X+ Y+
-			//X- Y-
-			//X- Y+
-		}
-
-		if (this.color == "black") {
+			if (this.color == "black") {
+			}
 		}
 	}
 }
