@@ -304,12 +304,12 @@ class Bishop extends Figure {
 		} else {
 			yDir = "minus";
 		}
-		console.log("in");
+		// console.log("in");
 		if (xDir == "plus" && yDir == "plus") {
 			while (true) {
 				scanZone[0]++;
 				scanZone[1]++;
-				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
 				if (scanZone[1] == target[1]) {
 					break;
 				} else if (
@@ -318,7 +318,7 @@ class Bishop extends Figure {
 					succesFull = false;
 					break;
 				} else {
-					console.log("Not found");
+					// console.log("Not found");
 				}
 			}
 		}
@@ -327,7 +327,7 @@ class Bishop extends Figure {
 			while (true) {
 				scanZone[0]--;
 				scanZone[1]--;
-				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
 				if (scanZone[1] == target[1]) {
 					break;
 				} else if (
@@ -336,7 +336,7 @@ class Bishop extends Figure {
 					succesFull = false;
 					break;
 				} else {
-					console.log("Not found");
+					// console.log("Not found");
 				}
 			}
 		}
@@ -344,7 +344,7 @@ class Bishop extends Figure {
 			while (true) {
 				scanZone[0]--;
 				scanZone[1]++;
-				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
 				if (scanZone[1] == target[1]) {
 					break;
 				} else if (
@@ -353,7 +353,7 @@ class Bishop extends Figure {
 					succesFull = false;
 					break;
 				} else {
-					console.log("Not found");
+					// console.log("Not found");
 				}
 			}
 		}
@@ -361,7 +361,7 @@ class Bishop extends Figure {
 			while (true) {
 				scanZone[0]++;
 				scanZone[1]--;
-				console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
 				if (scanZone[1] == target[1]) {
 					break;
 				} else if (
@@ -370,17 +370,16 @@ class Bishop extends Figure {
 					succesFull = false;
 					break;
 				} else {
-					console.log("Not found");
+					// console.log("Not found");
 				}
 			}
 		}
-		// console.log(xDir, yDir);
-		// console.log(current, target);
-		// console.log(zonesBetween);
+		return succesFull;
 	}
 
 	//Moving engine
 	moveChecker(newX, newY, e) {
+		const target = e.currentTarget;
 		let zones = this.avaliableZones();
 		let cordinate = e.currentTarget.dataset.id;
 		let targetPos = [newX, newY];
@@ -395,12 +394,46 @@ class Bishop extends Figure {
 			//We need to determine first which direction is the piece going
 			let currPos = [this.x, this.y];
 			// console.log(currPos);
-			this.checkZone(currPos, targetPos);
-			if (false) {
+			//Get's inside if there's no obsticle in between
+			if (this.checkZone(currPos, targetPos)) {
+				//If it's white
 				if (this.color == "white") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("black")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[1]
+						);
+						target.removeChild(target.childNodes[0]);
+						selected = false;
+						return true;
+					} else {
+						return true;
+					}
 				}
-
+				//If it's black
 				if (this.color == "black") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("white")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[0]
+						);
+						target.removeChild(target.childNodes[0]);
+						return true;
+					} else {
+						return true;
+					}
 				}
 			} else {
 				// console.log("Yikes");
@@ -429,6 +462,8 @@ let turn = "white";
 // const test22 = new Pawn(6, 5, "pawn", "white");
 const test55 = new Bishop(4, 5, "bishop", "white");
 const test56 = new Bishop(5, 6, "bishop", "white");
+const test57 = new Bishop(6, 5, "bishop", "black");
+const test58 = new Bishop(4, 7, "bishop", "black");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
