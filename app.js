@@ -450,6 +450,27 @@ class Knight extends Figure {
 		super(x, y, img, color);
 	}
 
+	//Get avaliable zones
+	avaliableZones() {
+		let avaliableSteps = [];
+		//X+ Y-
+		let xCounter = this.x;
+		let yCounter = this.y;
+
+		avaliableSteps.push(
+			[xCounter - 1, yCounter + 2],
+			[xCounter + 1, yCounter + 2],
+			[xCounter + 2, yCounter + 1],
+			[xCounter + 2, yCounter - 1],
+			[xCounter - 1, yCounter - 2],
+			[xCounter + 1, yCounter - 2],
+			[xCounter - 2, yCounter - 1],
+			[xCounter - 2, yCounter + 1]
+		);
+		console.log(avaliableSteps);
+		return avaliableSteps;
+	}
+
 	//Moving engine
 	moveChecker(newX, newY, e) {
 		const target = e.currentTarget;
@@ -467,51 +488,48 @@ class Knight extends Figure {
 			//We need to determine first which direction is the piece going
 			let currPos = [this.x, this.y];
 			// console.log(currPos);
-			//Get's inside if there's no obsticle in between
-			if (this.checkZone(currPos, targetPos)) {
-				//If it's white
-				if (this.color == "white") {
-					//Check if there's a figure on the target zone
-					if (target.childNodes.length < 1) {
-						return true;
-					}
-					//If there's a figure, capture it
-					if (target.childNodes[0].classList.contains("black")) {
-						let cordinate = e.currentTarget.dataset.id;
-						Board.removeFigure(
-							parseInt(cordinate) + 1,
-							boardObj.activeFigures[1]
-						);
-						target.removeChild(target.childNodes[0]);
-						selected = false;
-						return true;
-					} else {
-						return true;
-					}
+			//If it's white
+			if (this.color == "white") {
+				//Check if there's a figure on the target zone
+				if (target.childNodes.length < 1) {
+					return true;
 				}
-				//If it's black
-				if (this.color == "black") {
-					//Check if there's a figure on the target zone
-					if (target.childNodes.length < 1) {
-						return true;
-					}
-					//If there's a figure, capture it
-					if (target.childNodes[0].classList.contains("white")) {
-						let cordinate = e.currentTarget.dataset.id;
-						Board.removeFigure(
-							parseInt(cordinate) + 1,
-							boardObj.activeFigures[0]
-						);
-						target.removeChild(target.childNodes[0]);
-						return true;
-					} else {
-						return true;
-					}
+				//If there's a figure, capture it
+				if (target.childNodes[0].classList.contains("black")) {
+					let cordinate = e.currentTarget.dataset.id;
+					Board.removeFigure(
+						parseInt(cordinate) + 1,
+						boardObj.activeFigures[1]
+					);
+					target.removeChild(target.childNodes[0]);
+					selected = false;
+					return true;
+				} else {
+					return true;
 				}
-			} else {
-				// console.log("Yikes");
-				return;
 			}
+			//If it's black
+			if (this.color == "black") {
+				//Check if there's a figure on the target zone
+				if (target.childNodes.length < 1) {
+					return true;
+				}
+				//If there's a figure, capture it
+				if (target.childNodes[0].classList.contains("white")) {
+					let cordinate = e.currentTarget.dataset.id;
+					Board.removeFigure(
+						parseInt(cordinate) + 1,
+						boardObj.activeFigures[0]
+					);
+					target.removeChild(target.childNodes[0]);
+					return true;
+				} else {
+					return true;
+				}
+			}
+		} else {
+			// console.log("Yikes");
+			return;
 		}
 	}
 }
@@ -537,6 +555,8 @@ const test55 = new Bishop(4, 5, "bishop", "white");
 const test56 = new Bishop(5, 6, "bishop", "white");
 const test57 = new Bishop(6, 5, "bishop", "black");
 const test58 = new Bishop(4, 7, "bishop", "black");
+const test1 = new Knight(3, 5, "knight", "black");
+const test2 = new Knight(8, 7, "knight", "white");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
