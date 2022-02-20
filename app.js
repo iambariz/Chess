@@ -248,6 +248,7 @@ class Bishop extends Figure {
 	constructor(x, y, img, color) {
 		super(x, y, img, color);
 	}
+
 	//Get avaliable zones
 	avaliableZones() {
 		let avaliableSteps = [];
@@ -286,7 +287,8 @@ class Bishop extends Figure {
 		}
 		return avaliableSteps;
 	}
-	//Check the amount of zones between the curren and target
+
+	//Check the amount of zones between the current and target
 	checkZone(current, target) {
 		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
 		let xDir;
@@ -375,6 +377,77 @@ class Bishop extends Figure {
 			}
 		}
 		return succesFull;
+	}
+
+	//Moving engine
+	moveChecker(newX, newY, e) {
+		const target = e.currentTarget;
+		let zones = this.avaliableZones();
+		let cordinate = e.currentTarget.dataset.id;
+		let targetPos = [newX, newY];
+		//Prefix
+		if (Math.floor(cordinate / 8) == 0) {
+			newY = 1;
+		} else {
+			newY = Math.floor(cordinate / 8) + 1;
+		}
+		//Check if move is legal, bassed on an array of [x,y]
+		if (this.exists(zones, targetPos)) {
+			//We need to determine first which direction is the piece going
+			let currPos = [this.x, this.y];
+			// console.log(currPos);
+			//Get's inside if there's no obsticle in between
+			if (this.checkZone(currPos, targetPos)) {
+				//If it's white
+				if (this.color == "white") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("black")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[1]
+						);
+						target.removeChild(target.childNodes[0]);
+						selected = false;
+						return true;
+					} else {
+						return true;
+					}
+				}
+				//If it's black
+				if (this.color == "black") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("white")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[0]
+						);
+						target.removeChild(target.childNodes[0]);
+						return true;
+					} else {
+						return true;
+					}
+				}
+			} else {
+				// console.log("Yikes");
+				return;
+			}
+		}
+	}
+}
+
+class Knight extends Figure {
+	constructor(x, y, img, color) {
+		super(x, y, img, color);
 	}
 
 	//Moving engine
