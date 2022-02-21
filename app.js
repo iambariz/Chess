@@ -804,85 +804,15 @@ class Queen extends Figure {
 		let scanZone = [current[0], current[1]];
 		let succesFull = true;
 
-		if (target[0] > current[0]) {
-			xDir = "plus";
+		//Decide if it's Diagonal or Horizontal / Vertical
+		if (
+			(current[0] == target[0] && current[1] != target[1]) ||
+			(current[0] != target[0] && current[1] == target[1])
+		) {
+			//Horizontal or Vertical
+			console.log("Horizontal");
 		} else {
-			xDir = "minus";
-		}
-		if (target[1] > current[1]) {
-			yDir = "plus";
-		} else {
-			yDir = "minus";
-		}
-		// console.log("in");
-		if (xDir == "plus" && yDir == "plus") {
-			while (true) {
-				scanZone[0]++;
-				scanZone[1]++;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-
-		if (xDir == "minus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "minus" && yDir == "plus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]++;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "plus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]++;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
+			//Diagonal
 		}
 		return succesFull;
 	}
@@ -977,6 +907,7 @@ const test58 = new Bishop(4, 7, "bishop", "black");
 const test1 = new Knight(3, 5, "knight", "black");
 const test2 = new Knight(8, 7, "knight", "white");
 const test4 = new Rook(2, 7, "rook", "white");
+const test34 = new Queen(1, 1, "queen", "white");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
