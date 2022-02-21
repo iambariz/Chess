@@ -484,28 +484,77 @@ class Rook extends Figure {
 	//Check the amount of zones between the current and target
 	checkZone(current, target) {
 		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
-		let xDir;
-		let yDir;
+		let dir;
 		let scanZone = [current[0], current[1]];
 		let succesFull = true;
 
-		if (target[0] > current[0]) {
-			xDir = "plus";
+		if (target[0] != current[0]) {
+			if (target[0] > current[0]) {
+				dir = "right";
+			} else {
+				dir = "left";
+			}
 		} else {
-			xDir = "minus";
-		}
-		if (target[1] > current[1]) {
-			yDir = "plus";
-		} else {
-			yDir = "minus";
+			if (target[1] > current[1]) {
+				dir = "up";
+			} else {
+				dir = "down";
+			}
 		}
 		// console.log("in");
-		if (xDir == "plus" && yDir == "plus") {
+		if (dir == "up") {
 			while (true) {
-				scanZone[0]++;
 				scanZone[1]++;
 				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
 				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (dir == "down") {
+			while (true) {
+				scanZone[1]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (dir == "right") {
+			while (true) {
+				scanZone[0]++;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[0] == target[0]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (dir == "left") {
+			while (true) {
+				scanZone[0]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[0] == target[0]) {
 					break;
 				} else if (
 					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
@@ -518,57 +567,6 @@ class Rook extends Figure {
 			}
 		}
 
-		if (xDir == "minus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "minus" && yDir == "plus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]++;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "plus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]++;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
 		return succesFull;
 	}
 
