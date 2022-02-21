@@ -477,7 +477,6 @@ class Rook extends Figure {
 			yCounter--;
 			avaliableSteps.push([xCounter, yCounter]);
 		}
-		console.log(avaliableSteps);
 		return avaliableSteps;
 	}
 
@@ -721,6 +720,235 @@ class Knight extends Figure {
 		} else {
 			// console.log("Yikes");
 			return;
+		}
+	}
+}
+
+class Queen extends Figure {
+	constructor(x, y, img, color) {
+		super(x, y, img, color);
+	}
+
+	//Get avaliable zones
+	avaliableZones() {
+		//Diagonal
+		let avaliableSteps = [];
+		//X+ Y-
+		let xCounter = this.x;
+		let yCounter = this.y;
+		// console.log(this.x, this.y);
+		while (xCounter < 8 && yCounter > 1) {
+			xCounter++;
+			yCounter--;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//X+ Y+
+		xCounter = this.x;
+		yCounter = this.y;
+		while (xCounter < 8 && yCounter < 8) {
+			xCounter++;
+			yCounter++;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//X- Y-
+		xCounter = this.x;
+		yCounter = this.y;
+		while (xCounter > 1 && yCounter > 1) {
+			xCounter--;
+			yCounter--;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//X- Y+
+		xCounter = this.x;
+		yCounter = this.y;
+		while (xCounter > 1 && yCounter < 8) {
+			xCounter--;
+			yCounter++;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//Horizontal
+		xCounter = this.x;
+		yCounter = this.y;
+		//X+
+		while (xCounter < 8) {
+			xCounter++;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//X-
+		xCounter = this.x;
+		while (xCounter > 1) {
+			xCounter--;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//Y+
+		xCounter = this.x;
+		while (yCounter < 8) {
+			yCounter++;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+		//X-
+		yCounter = this.y;
+		while (yCounter > 1) {
+			yCounter--;
+			avaliableSteps.push([xCounter, yCounter]);
+		}
+
+		return avaliableSteps;
+	}
+
+	//Check the amount of zones between the current and target
+	checkZone(current, target) {
+		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
+		let xDir;
+		let yDir;
+		let scanZone = [current[0], current[1]];
+		let succesFull = true;
+
+		if (target[0] > current[0]) {
+			xDir = "plus";
+		} else {
+			xDir = "minus";
+		}
+		if (target[1] > current[1]) {
+			yDir = "plus";
+		} else {
+			yDir = "minus";
+		}
+		// console.log("in");
+		if (xDir == "plus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]++;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+
+		if (xDir == "minus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "minus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]++;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "plus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		return succesFull;
+	}
+
+	//Moving engine
+	moveChecker(newX, newY, e) {
+		const target = e.currentTarget;
+		let zones = this.avaliableZones();
+		let cordinate = e.currentTarget.dataset.id;
+		let targetPos = [newX, newY];
+		//Prefix
+		if (Math.floor(cordinate / 8) == 0) {
+			newY = 1;
+		} else {
+			newY = Math.floor(cordinate / 8) + 1;
+		}
+		//Check if move is legal, bassed on an array of [x,y]
+		if (this.exists(zones, targetPos)) {
+			//We need to determine first which direction is the piece going
+			let currPos = [this.x, this.y];
+			// console.log(currPos);
+			//Get's inside if there's no obsticle in between
+			if (this.checkZone(currPos, targetPos)) {
+				//If it's white
+				if (this.color == "white") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("black")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[1]
+						);
+						target.removeChild(target.childNodes[0]);
+						selected = false;
+						return true;
+					} else {
+						return true;
+					}
+				}
+				//If it's black
+				if (this.color == "black") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("white")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[0]
+						);
+						target.removeChild(target.childNodes[0]);
+						return true;
+					} else {
+						return true;
+					}
+				}
+			} else {
+				// console.log("Yikes");
+				return;
+			}
 		}
 	}
 }
