@@ -887,8 +887,6 @@ class Queen extends Figure {
 					}
 				}
 			}
-			console.log("Horizontal");
-
 			return succesFull;
 		} else {
 			//Diagonal
@@ -1042,6 +1040,91 @@ class Queen extends Figure {
 	}
 }
 
+class King extends Figure {
+	constructor(x, y, img, color) {
+		super(x, y, img, color);
+	}
+
+	//Get avaliable zones
+	avaliableZones() {
+		let avaliableSteps = [];
+
+		avaliableSteps.push(
+			[xCounter + 1, xCounter + 1],
+			[xCounter - 1, xCounter - 1],
+			[yCounter + 1, yCounter + 1],
+			[yCounter - 1, yCounter - 1],
+			[xCounter + 1, yCounter + 1],
+			[xCounter + 1, yCounter - 1],
+			[xCounter - 1, yCounter + 1],
+			[xCounter - 1, yCounter - 1]
+		);
+		return avaliableSteps;
+	}
+
+	//Moving engine
+	moveChecker(newX, newY, e) {
+		const target = e.currentTarget;
+		let zones = this.avaliableZones();
+		let cordinate = e.currentTarget.dataset.id;
+		let targetPos = [newX, newY];
+		//Prefix
+		if (Math.floor(cordinate / 8) == 0) {
+			newY = 1;
+		} else {
+			newY = Math.floor(cordinate / 8) + 1;
+		}
+		//Check if move is legal, bassed on an array of [x,y]
+		if (this.exists(zones, targetPos)) {
+			//We need to determine first which direction is the piece going
+			let currPos = [this.x, this.y];
+			// console.log(currPos);
+			//If it's white
+			if (this.color == "white") {
+				//Check if there's a figure on the target zone
+				if (target.childNodes.length < 1) {
+					return true;
+				}
+				//If there's a figure, capture it
+				if (target.childNodes[0].classList.contains("black")) {
+					let cordinate = e.currentTarget.dataset.id;
+					Board.removeFigure(
+						parseInt(cordinate) + 1,
+						boardObj.activeFigures[1]
+					);
+					target.removeChild(target.childNodes[0]);
+					selected = false;
+					return true;
+				} else {
+					return true;
+				}
+			}
+			//If it's black
+			if (this.color == "black") {
+				//Check if there's a figure on the target zone
+				if (target.childNodes.length < 1) {
+					return true;
+				}
+				//If there's a figure, capture it
+				if (target.childNodes[0].classList.contains("white")) {
+					let cordinate = e.currentTarget.dataset.id;
+					Board.removeFigure(
+						parseInt(cordinate) + 1,
+						boardObj.activeFigures[0]
+					);
+					target.removeChild(target.childNodes[0]);
+					return true;
+				} else {
+					return true;
+				}
+			}
+		} else {
+			// console.log("Yikes");
+			return;
+		}
+	}
+}
+
 const boardObj = new Board();
 boardObj.generate();
 const board = document.querySelector(".board");
@@ -1067,6 +1150,7 @@ const test1 = new Knight(3, 5, "knight", "black");
 const test2 = new Knight(8, 7, "knight", "white");
 const test4 = new Rook(2, 7, "rook", "white");
 const test34 = new Queen(1, 1, "queen", "white");
+const test84 = new King(5, 1, "king", "white");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
