@@ -1050,14 +1050,14 @@ class King extends Figure {
 		let avaliableSteps = [];
 
 		avaliableSteps.push(
-			[xCounter + 1, xCounter + 1],
-			[xCounter - 1, xCounter - 1],
-			[yCounter + 1, yCounter + 1],
-			[yCounter - 1, yCounter - 1],
-			[xCounter + 1, yCounter + 1],
-			[xCounter + 1, yCounter - 1],
-			[xCounter - 1, yCounter + 1],
-			[xCounter - 1, yCounter - 1]
+			[this.x + 1, this.y + 1],
+			[this.x + 1, this.y - 1],
+			[this.x - 1, this.y + 1],
+			[this.x - 1, this.y - 1],
+			[this.x, this.y - 1],
+			[this.x, this.y + 1],
+			[this.x - 1, this.y],
+			[this.x + 1, this.y]
 		);
 		return avaliableSteps;
 	}
@@ -1077,7 +1077,6 @@ class King extends Figure {
 		//Check if move is legal, bassed on an array of [x,y]
 		if (this.exists(zones, targetPos)) {
 			//We need to determine first which direction is the piece going
-			let currPos = [this.x, this.y];
 			// console.log(currPos);
 			//If it's white
 			if (this.color == "white") {
