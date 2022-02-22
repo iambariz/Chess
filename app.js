@@ -1134,22 +1134,42 @@ let active = undefined;
 let turn = "white";
 
 //x - y - type - color
-const test221 = new Pawn(1, 4, "pawn", "black");
-const test3 = new Pawn(3, 4, "pawn", "black");
-// const test2 = new Pawn(2, 5, "pawn", "white");
-// const test4 = new Pawn(4, 5, "pawn", "white");
-// const test11 = new Pawn(5, 4, "pawn", "black");
-// const test33 = new Pawn(7, 4, "pawn", "black");
-// const test22 = new Pawn(6, 5, "pawn", "white");
-const test55 = new Bishop(4, 5, "bishop", "white");
-const test56 = new Bishop(5, 6, "bishop", "white");
-const test57 = new Bishop(6, 5, "bishop", "black");
-const test58 = new Bishop(4, 7, "bishop", "black");
-const test1 = new Knight(3, 5, "knight", "black");
-const test2 = new Knight(8, 7, "knight", "white");
-const test4 = new Rook(2, 7, "rook", "white");
-const test34 = new Queen(1, 1, "queen", "white");
-const test84 = new King(5, 1, "king", "white");
+
+//White
+const wPawn1 = new Pawn(1, 7, "pawn", "white");
+const wPawn2 = new Pawn(2, 7, "pawn", "white");
+const wPawn3 = new Pawn(3, 7, "pawn", "white");
+const wPawn4 = new Pawn(4, 7, "pawn", "white");
+const wPawn5 = new Pawn(5, 7, "pawn", "white");
+const wPawn6 = new Pawn(6, 7, "pawn", "white");
+const wPawn7 = new Pawn(7, 7, "pawn", "white");
+const wPawn8 = new Pawn(8, 7, "pawn", "white");
+const wRook1 = new Rook(8, 8, "rook", "white");
+const wRook2 = new Rook(1, 8, "rook", "white");
+const wBish1 = new Bishop(3, 8, "bishop", "white");
+const wBish2 = new Bishop(6, 8, "bishop", "white");
+const wKnight1 = new Knight(2, 8, "knight", "white");
+const wKnight2 = new Knight(7, 8, "knight", "white");
+const wKing = new King(4, 8, "king", "white");
+const wQueen = new Queen(5, 8, "queen", "white");
+
+//Black
+const bPawn1 = new Pawn(1, 2, "pawn", "black");
+const bPawn2 = new Pawn(2, 2, "pawn", "black");
+const bPawn3 = new Pawn(3, 2, "pawn", "black");
+const bPawn4 = new Pawn(4, 2, "pawn", "black");
+const bPawn5 = new Pawn(5, 2, "pawn", "black");
+const bPawn6 = new Pawn(6, 2, "pawn", "black");
+const bPawn7 = new Pawn(7, 2, "pawn", "black");
+const bPawn8 = new Pawn(8, 2, "pawn", "black");
+const bRook1 = new Rook(8, 1, "rook", "black");
+const bRook2 = new Rook(1, 1, "rook", "black");
+const bBish1 = new Bishop(3, 1, "bishop", "black");
+const bBish2 = new Bishop(6, 1, "bishop", "black");
+const bKnight1 = new Knight(2, 1, "knight", "black");
+const bKnight2 = new Knight(7, 1, "knight", "black");
+const bKing = new King(4, 1, "king", "black");
+const bQueen = new Queen(5, 1, "queen", "black");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
