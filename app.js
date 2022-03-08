@@ -193,52 +193,88 @@ class Pawn extends Figure {
 		super(x, y, img, color);
 	}
 
+	avaliableZones() {
+		let avaliableSteps = [];
+		//X+ Y-
+		if (this.color == "white") {
+			if (this.y == 7) {
+				avaliableSteps.push([this.x, this.y - 2]);
+			}
+			avaliableSteps.push([this.x, this.y - 1]);
+			avaliableSteps.push([this.x - 1, this.y - 1]);
+			avaliableSteps.push([this.x + 1, this.y - 1]);
+		} else {
+			if (this.y == 2) {
+				avaliableSteps.push([this.x, this.y + 2]);
+			}
+			avaliableSteps.push([this.x, this.y + 1]);
+			avaliableSteps.push([this.x - 1, this.y + 1]);
+			avaliableSteps.push([this.x + 1, this.y + 1]);
+		}
+		return avaliableSteps;
+	}
+
+	//Moving engine
 	moveChecker(newX, newY, e) {
 		const target = e.currentTarget;
-		//Move functions
-		if (this.color == "white") {
-			if (this.y - 1 == newY && this.x == newX) {
-				if (target.childNodes.length < 1) {
-					return true;
-				}
-			} else if (
-				(this.y - 1 == newY && this.x + 1 == newX) ||
-				(this.x - 1 == newX && this.y - 1 == newY)
-			) {
-				if (target.childNodes[0].classList.contains("black")) {
-					let cordinate = e.currentTarget.dataset.id;
-					Board.removeFigure(
-						parseInt(cordinate) + 1,
-						boardObj.activeFigures[1]
-					);
-					target.removeChild(target.childNodes[0]);
-					selected = false;
-					return true;
-				}
-			} else {
-				return false;
-			}
+		let zones = this.avaliableZones();
+		let cordinate = e.currentTarget.dataset.id;
+		let targetPos = [newX, newY];
+		//Prefix
+		if (Math.floor(cordinate / 8) == 0) {
+			newY = 1;
+		} else {
+			newY = Math.floor(cordinate / 8) + 1;
 		}
-		if (this.color == "black") {
-			if (this.y + 1 == newY && this.x == newX) {
-				if (target.childNodes.length < 1) {
-					return true;
+		//Check if move is legal, bassed on an array of [x,y]
+		if (this.exists(zones, targetPos)) {
+			//We need to determine first which direction is the piece going
+			let currPos = [this.x, this.y];
+			// console.log(currPos);
+			//Get's inside if there's no obsticle in between
+			if (this.checkZone(currPos, targetPos)) {
+				//If it's white
+				if (this.color == "white") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("black")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[1]
+						);
+						target.removeChild(target.childNodes[0]);
+						selected = false;
+						return true;
+					} else {
+						return true;
+					}
 				}
-			} else if (
-				(this.y + 1 == newY && this.x + 1 == newX) ||
-				(this.y + 1 == newY && this.x - 1 == newX)
-			) {
-				if (target.childNodes[0].classList.contains("white")) {
-					let cordinate = e.currentTarget.dataset.id;
-					Board.removeFigure(
-						parseInt(cordinate) + 1,
-						boardObj.activeFigures[0]
-					);
-					target.removeChild(target.childNodes[0]);
-					return true;
+				//If it's black
+				if (this.color == "black") {
+					//Check if there's a figure on the target zone
+					if (target.childNodes.length < 1) {
+						return true;
+					}
+					//If there's a figure, capture it
+					if (target.childNodes[0].classList.contains("white")) {
+						let cordinate = e.currentTarget.dataset.id;
+						Board.removeFigure(
+							parseInt(cordinate) + 1,
+							boardObj.activeFigures[0]
+						);
+						target.removeChild(target.childNodes[0]);
+						return true;
+					} else {
+						return true;
+					}
 				}
 			} else {
-				return false;
+				// console.log("Yikes");
+				return;
 			}
 		}
 	}
