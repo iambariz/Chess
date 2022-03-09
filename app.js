@@ -214,6 +214,97 @@ class Pawn extends Figure {
 		return avaliableSteps;
 	}
 
+	//Check the amount of zones between the current and target
+	checkZone(current, target) {
+		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
+		let xDir;
+		let yDir;
+		let scanZone = [current[0], current[1]];
+		let succesFull = true;
+
+		if (target[0] > current[0]) {
+			xDir = "plus";
+		} else {
+			xDir = "minus";
+		}
+		if (target[1] > current[1]) {
+			yDir = "plus";
+		} else {
+			yDir = "minus";
+		}
+		// console.log("in");
+		if (xDir == "plus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]++;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+
+		if (xDir == "minus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "minus" && yDir == "plus") {
+			while (true) {
+				scanZone[0]--;
+				scanZone[1]++;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		if (xDir == "plus" && yDir == "minus") {
+			while (true) {
+				scanZone[0]++;
+				scanZone[1]--;
+				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
+				if (scanZone[1] == target[1]) {
+					break;
+				} else if (
+					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
+				) {
+					succesFull = false;
+					break;
+				} else {
+					// console.log("Not found");
+				}
+			}
+		}
+		return succesFull;
+	}
+
 	//Moving engine
 	moveChecker(newX, newY, e) {
 		const target = e.currentTarget;
