@@ -222,21 +222,12 @@ class Pawn extends Figure {
 		let scanZone = [current[0], current[1]];
 		let succesFull = true;
 		let capture = true;
-
 		if (target[0] == current[0]) {
 			capture = false;
 		}
 		if (capture == false) {
 			if (e.currentTarget.childNodes.length > 0) {
 				succesFull = false;
-			}
-		} else {
-			if (
-				e.currentTarget.childNodes.length == 0 &&
-				e.currentTarget.childNodes[0].classList == this.color
-			) {
-				succesFull = false;
-			} else {
 			}
 		}
 		return succesFull;
