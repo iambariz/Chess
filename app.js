@@ -217,18 +217,31 @@ class Pawn extends Figure {
 	//Check the amount of zones between the current and target
 	checkZone(current, target, e) {
 		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
-		let xDir;
-		let yDir;
-		let scanZone = [current[0], current[1]];
 		let succesFull = true;
 		let capture = true;
-		if (target[0] == current[0]) {
-			capture = false;
-		}
-		if (capture == false) {
-			if (e.currentTarget.childNodes.length > 0) {
-				succesFull = false;
+		if (target[1] == current[1] + 2 || target[1] == current[1] - 2) {
+			//Double move
+			if (this.color == "black") {
 			}
+
+			if (target[0] == current[0]) {
+				capture = false;
+			}
+			if (capture == false) {
+				if (e.currentTarget.childNodes.length > 0) {
+					succesFull = false;
+				}
+			} else {
+				//if this exist then go to the if statement else failure
+				if (e.currentTarget.hasChildNodes()) {
+					if (e.currentTarget.childNodes[0].classList == this.color) {
+						succesFull = false;
+					}
+				} else {
+					succesFull = false;
+				}
+			}
+			return succesFull;
 		} else {
 			//if this exist then go to the if statement else failure
 			if (e.currentTarget.hasChildNodes()) {
@@ -236,10 +249,17 @@ class Pawn extends Figure {
 					succesFull = false;
 				}
 			} else {
-				succesFull = false;
+				//if this exist then go to the if statement else failure
+				if (e.currentTarget.hasChildNodes()) {
+					if (e.currentTarget.childNodes[0].classList == this.color) {
+						succesFull = false;
+					}
+				} else {
+					succesFull = false;
+				}
 			}
+			return succesFull;
 		}
-		return succesFull;
 	}
 
 	//Moving engine
