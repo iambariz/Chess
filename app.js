@@ -215,91 +215,28 @@ class Pawn extends Figure {
 	}
 
 	//Check the amount of zones between the current and target
-	checkZone(current, target) {
+	checkZone(current, target, e) {
 		// let zonesBetween = Math.abs(Math.abs(current[0]) - Math.abs(target[0])) - 1;
 		let xDir;
 		let yDir;
 		let scanZone = [current[0], current[1]];
 		let succesFull = true;
+		let capture = true;
 
-		if (target[0] > current[0]) {
-			xDir = "plus";
+		if (target[0] == current[0]) {
+			capture = false;
+		}
+		if (capture == false) {
+			if (e.currentTarget.childNodes.length > 0) {
+				succesFull = false;
+			}
 		} else {
-			xDir = "minus";
-		}
-		if (target[1] > current[1]) {
-			yDir = "plus";
-		} else {
-			yDir = "minus";
-		}
-		// console.log("in");
-		if (xDir == "plus" && yDir == "plus") {
-			while (true) {
-				scanZone[0]++;
-				scanZone[1]++;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-
-		if (xDir == "minus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "minus" && yDir == "plus") {
-			while (true) {
-				scanZone[0]--;
-				scanZone[1]++;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
-			}
-		}
-		if (xDir == "plus" && yDir == "minus") {
-			while (true) {
-				scanZone[0]++;
-				scanZone[1]--;
-				// console.log(zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1]);
-				if (scanZone[1] == target[1]) {
-					break;
-				} else if (
-					zones[(scanZone[1] - 1) * 8 + scanZone[0] - 1].childNodes.length > 0
-				) {
-					succesFull = false;
-					break;
-				} else {
-					// console.log("Not found");
-				}
+			if (
+				e.currentTarget.childNodes.length == 0 &&
+				e.currentTarget.childNodes[0].classList == this.color
+			) {
+				succesFull = false;
+			} else {
 			}
 		}
 		return succesFull;
@@ -323,7 +260,7 @@ class Pawn extends Figure {
 			let currPos = [this.x, this.y];
 			// console.log(currPos);
 			//Get's inside if there's no obsticle in between
-			if (this.checkZone(currPos, targetPos)) {
+			if (this.checkZone(currPos, targetPos, e)) {
 				//If it's white
 				if (this.color == "white") {
 					//Check if there's a figure on the target zone
@@ -1264,7 +1201,7 @@ let turn = "white";
 
 //White
 const wPawn1 = new Pawn(1, 7, "pawn", "white");
-const wPawn2 = new Pawn(2, 7, "pawn", "white");
+const wPawn2 = new Pawn(2, 5, "pawn", "white");
 const wPawn3 = new Pawn(3, 7, "pawn", "white");
 const wPawn4 = new Pawn(4, 7, "pawn", "white");
 const wPawn5 = new Pawn(5, 7, "pawn", "white");
@@ -1281,7 +1218,7 @@ const wKing = new King(4, 8, "king", "white");
 const wQueen = new Queen(5, 8, "queen", "white");
 
 //Black
-const bPawn1 = new Pawn(1, 2, "pawn", "black");
+const bPawn1 = new Pawn(1, 4, "pawn", "black");
 const bPawn2 = new Pawn(2, 2, "pawn", "black");
 const bPawn3 = new Pawn(3, 2, "pawn", "black");
 const bPawn4 = new Pawn(4, 2, "pawn", "black");
