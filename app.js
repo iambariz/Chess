@@ -229,6 +229,15 @@ class Pawn extends Figure {
 			if (e.currentTarget.childNodes.length > 0) {
 				succesFull = false;
 			}
+		} else {
+			//if this exist then go to the if statement else failure
+			if (e.currentTarget.hasChildNodes()) {
+				if (e.currentTarget.childNodes[0].classList == this.color) {
+					succesFull = false;
+				}
+			} else {
+				succesFull = false;
+			}
 		}
 		return succesFull;
 	}
