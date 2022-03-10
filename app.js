@@ -222,6 +222,14 @@ class Pawn extends Figure {
 		if (target[1] == current[1] + 2 || target[1] == current[1] - 2) {
 			//Double move
 			if (this.color == "black") {
+				if (zones[(current[1] + 2) * 8 + current[0] + 1].hasChildNodes()) {
+					succesFull = false;
+				}
+			}
+			if (this.color == "white") {
+				if (zones[(current[1] - 2) * 8 + current[0] - 1].hasChildNodes()) {
+					succesFull = false;
+				}
 			}
 
 			if (target[0] == current[0]) {
@@ -243,9 +251,12 @@ class Pawn extends Figure {
 			}
 			return succesFull;
 		} else {
-			//if this exist then go to the if statement else failure
-			if (e.currentTarget.hasChildNodes()) {
-				if (e.currentTarget.childNodes[0].classList == this.color) {
+			//Single move
+			if (target[0] == current[0]) {
+				capture = false;
+			}
+			if (capture == false) {
+				if (e.currentTarget.childNodes.length > 0) {
 					succesFull = false;
 				}
 			} else {
