@@ -542,6 +542,7 @@ class Bishop extends Figure {
 class Rook extends Figure {
 	constructor(x, y, img, color) {
 		super(x, y, img, color);
+		this.moved = false;
 	}
 
 	//Get avaliable zones
@@ -1138,6 +1139,7 @@ class Queen extends Figure {
 class King extends Figure {
 	constructor(x, y, img, color) {
 		super(x, y, img, color);
+		this.moved = false;
 	}
 
 	//Get avaliable zones
@@ -1241,12 +1243,12 @@ const wPawn7 = new Pawn(7, 7, "pawn", "white");
 const wPawn8 = new Pawn(8, 7, "pawn", "white");
 const wRook1 = new Rook(8, 8, "rook", "white");
 const wRook2 = new Rook(1, 8, "rook", "white");
-const wBish1 = new Bishop(3, 8, "bishop", "white");
-const wBish2 = new Bishop(6, 8, "bishop", "white");
-const wKnight1 = new Knight(2, 8, "knight", "white");
-const wKnight2 = new Knight(7, 8, "knight", "white");
+// const wBish1 = new Bishop(3, 8, "bishop", "white");
+// const wBish2 = new Bishop(6, 8, "bishop", "white");
+const wKnight1 = new Knight(3, 6, "knight", "white");
+const wKnight2 = new Knight(8, 6, "knight", "white");
 const wKing = new King(4, 8, "king", "white");
-const wQueen = new Queen(5, 8, "queen", "white");
+// const wQueen = new Queen(5, 8, "queen", "white");
 
 //Black
 const bPawn1 = new Pawn(1, 4, "pawn", "black");
