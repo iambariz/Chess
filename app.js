@@ -684,6 +684,7 @@ class Rook extends Figure {
 			if (this.checkZone(currPos, targetPos)) {
 				//If it's white
 				if (this.color == "white") {
+					this.moved = true;
 					//Check if there's a figure on the target zone
 					if (target.childNodes.length < 1) {
 						return true;
@@ -704,6 +705,7 @@ class Rook extends Figure {
 				}
 				//If it's black
 				if (this.color == "black") {
+					this.moved = true;
 					//Check if there's a figure on the target zone
 					if (target.childNodes.length < 1) {
 						return true;
@@ -1123,6 +1125,8 @@ class Queen extends Figure {
 							boardObj.activeFigures[0]
 						);
 						target.removeChild(target.childNodes[0]);
+						this.moved = true;
+						console.log(this.moved);
 						return true;
 					} else {
 						return true;
@@ -1146,6 +1150,13 @@ class King extends Figure {
 	avaliableZones() {
 		let avaliableSteps = [];
 
+		console.log(this.moved == false);
+		if (this.moved == false) {
+			if (this.castlingChecker() == true) {
+				console.log("Succes");
+			}
+		}
+
 		avaliableSteps.push(
 			[this.x + 1, this.y + 1],
 			[this.x + 1, this.y - 1],
@@ -1157,6 +1168,22 @@ class King extends Figure {
 			[this.x + 1, this.y]
 		);
 		return avaliableSteps;
+	}
+
+	castlingChecker() {
+		if (this.moved == false) {
+			let succesed = true;
+			if (this.color == "white") {
+				for (let i = 0; i < boardObj.activeFigures[0].length; i++) {
+					if (boardObj.activeFigures[0][i].img == "rook") {
+						if ((boardObj.activeFigures[0][i].moved = false)) {
+							succesed = false;
+						}
+					}
+				}
+			}
+			return succesed;
+		}
 	}
 
 	//Moving engine
@@ -1177,6 +1204,7 @@ class King extends Figure {
 			// console.log(currPos);
 			//If it's white
 			if (this.color == "white") {
+				this.moved = true;
 				//Check if there's a figure on the target zone
 				if (target.childNodes.length < 1) {
 					return true;
@@ -1197,6 +1225,7 @@ class King extends Figure {
 			}
 			//If it's black
 			if (this.color == "black") {
+				this.moved = true;
 				//Check if there's a figure on the target zone
 				if (target.childNodes.length < 1) {
 					return true;
@@ -1247,7 +1276,7 @@ const wRook2 = new Rook(1, 8, "rook", "white");
 // const wBish2 = new Bishop(6, 8, "bishop", "white");
 const wKnight1 = new Knight(3, 6, "knight", "white");
 const wKnight2 = new Knight(8, 6, "knight", "white");
-const wKing = new King(4, 8, "king", "white");
+const wKing = new King(5, 8, "king", "white");
 // const wQueen = new Queen(5, 8, "queen", "white");
 
 //Black
@@ -1265,8 +1294,8 @@ const bBish1 = new Bishop(3, 1, "bishop", "black");
 const bBish2 = new Bishop(6, 1, "bishop", "black");
 const bKnight1 = new Knight(2, 1, "knight", "black");
 const bKnight2 = new Knight(7, 1, "knight", "black");
-const bKing = new King(4, 1, "king", "black");
-const bQueen = new Queen(5, 1, "queen", "black");
+const bKing = new King(5, 1, "king", "black");
+const bQueen = new Queen(4, 1, "queen", "black");
 
 //black
 boardObj.activeFigures[1].forEach((figure) => {
