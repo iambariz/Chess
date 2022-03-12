@@ -1163,13 +1163,16 @@ class King extends Figure {
 				if (shortCastling == true) {
 					avaliableSteps.push([this.x + 2, this.y]);
 				}
-				for (let i = 1; i < 4; i--) {
+				for (let i = 3; i > 0; i--) {
 					if (zones[this.y * 7 + this.x - 1 + i].childNodes.length > 0) {
 						longCastling = false;
 					}
 				}
 				if (shortCastling == true) {
-					avaliableSteps.push([this.x - 2, this.y]);
+					avaliableSteps.push([this.x + 2, this.y]);
+				}
+				if (longCastling == true) {
+					avaliableSteps.push([this.x - 3, this.y]);
 				}
 			}
 		}
