@@ -753,7 +753,7 @@ class Knight extends Figure {
 			[xCounter - 2, yCounter - 1],
 			[xCounter - 2, yCounter + 1]
 		);
-		console.log(avaliableSteps);
+		// console.log(avaliableSteps);
 		return avaliableSteps;
 	}
 
@@ -1150,10 +1150,27 @@ class King extends Figure {
 	avaliableZones() {
 		let avaliableSteps = [];
 
-		console.log(this.moved == false);
 		if (this.moved == false) {
 			if (this.castlingChecker() == true) {
-				console.log("Succes");
+				let shortCastling = true;
+				let longCastling = false;
+
+				for (let i = 1; i < 3; i++) {
+					if (zones[this.y * 7 + this.x - 1 + i].childNodes.length > 0) {
+						shortCastling = false;
+					}
+				}
+				if (shortCastling == true) {
+					avaliableSteps.push([this.x + 2, this.y]);
+				}
+				for (let i = 1; i < 4; i--) {
+					if (zones[this.y * 7 + this.x - 1 + i].childNodes.length > 0) {
+						longCastling = false;
+					}
+				}
+				if (shortCastling == true) {
+					avaliableSteps.push([this.x - 2, this.y]);
+				}
 			}
 		}
 
@@ -1270,6 +1287,7 @@ const wPawn5 = new Pawn(5, 7, "pawn", "white");
 const wPawn6 = new Pawn(6, 7, "pawn", "white");
 const wPawn7 = new Pawn(7, 7, "pawn", "white");
 const wPawn8 = new Pawn(8, 7, "pawn", "white");
+//Short side rook
 const wRook1 = new Rook(8, 8, "rook", "white");
 const wRook2 = new Rook(1, 8, "rook", "white");
 // const wBish1 = new Bishop(3, 8, "bishop", "white");
@@ -1288,6 +1306,7 @@ const bPawn5 = new Pawn(5, 2, "pawn", "black");
 const bPawn6 = new Pawn(6, 2, "pawn", "black");
 const bPawn7 = new Pawn(7, 2, "pawn", "black");
 const bPawn8 = new Pawn(8, 2, "pawn", "black");
+//Short side rook
 const bRook1 = new Rook(8, 1, "rook", "black");
 const bRook2 = new Rook(1, 1, "rook", "black");
 const bBish1 = new Bishop(3, 1, "bishop", "black");
