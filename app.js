@@ -1153,18 +1153,15 @@ class King extends Figure {
 		if (this.moved == false) {
 			if (this.castlingChecker() == true) {
 				let shortCastling = true;
-				let longCastling = false;
+				let longCastling = true;
 
 				for (let i = 1; i < 3; i++) {
 					if (zones[this.y * 7 + this.x - 1 + i].childNodes.length > 0) {
 						shortCastling = false;
 					}
 				}
-				if (shortCastling == true) {
-					avaliableSteps.push([this.x + 2, this.y]);
-				}
-				for (let i = 3; i > 0; i--) {
-					if (zones[this.y * 7 + this.x - 1 + i].childNodes.length > 0) {
+				for (let i = 2; i > 0; i--) {
+					if (zones[this.y * 7 + this.x - 1 - i].childNodes.length > 0) {
 						longCastling = false;
 					}
 				}
@@ -1172,7 +1169,7 @@ class King extends Figure {
 					avaliableSteps.push([this.x + 2, this.y]);
 				}
 				if (longCastling == true) {
-					avaliableSteps.push([this.x - 3, this.y]);
+					avaliableSteps.push([this.x - 2, this.y]);
 				}
 			}
 		}
