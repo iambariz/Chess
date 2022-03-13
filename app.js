@@ -1146,6 +1146,59 @@ class King extends Figure {
 		this.moved = false;
 	}
 
+	move(active, element, e) {
+		e.stopPropagation();
+		//Prevent multiple listeners
+		if (e.currentTarget == active) {
+			return;
+		} else {
+			//The magic happens here
+			let cordinate = e.currentTarget.dataset.id;
+			let newX = (cordinate % 8) + 1;
+			let newY = 0;
+			if (Math.floor(cordinate / 8) == 0) {
+				newY = 1;
+			} else {
+				newY = Math.floor(cordinate / 8) + 1;
+			}
+			const checker = this.moveChecker(newX, newY, e);
+			if (checker == true) {
+				//Short castling
+				console.log(zones[(wRook1.y - 1) * 8 + wRook1.x]);
+				if (newX - this.x == 2) {
+					if (this.color == "white") {
+						wRook1.x = 6;
+					}
+					if (this.color == "black") {
+						bRook1.x = 6;
+					}
+				}
+				//Long castling
+				if (this.x - newX == 2) {
+					if (this.color == "white") {
+						zones[this.position - 1].appendChild(element);
+						wRook2.x = 4;
+					}
+					if (this.color == "black") {
+						bRook2.x = 4;
+					}
+				}
+				this.x = newX;
+				this.y = newY;
+				zones[this.position - 1].appendChild(element);
+				element.classList.remove("active");
+				zones.forEach((zone) => {
+					zone.removeEventListener("click", prefix);
+				});
+				selected = false;
+				Board.toggleRound();
+			} else {
+				//Failed movement
+				return;
+			}
+		}
+	}
+
 	//Get avaliable zones
 	avaliableZones() {
 		let avaliableSteps = [];
