@@ -1164,22 +1164,33 @@ class King extends Figure {
 			const checker = this.moveChecker(newX, newY, e);
 			if (checker == true) {
 				//Short castling
-				console.log(zones[(wRook1.y - 1) * 8 + wRook1.x]);
 				if (newX - this.x == 2) {
 					if (this.color == "white") {
+						zones[wRook1.position - 3].appendChild(
+							zones[wRook1.position - 1].childNodes[0]
+						);
 						wRook1.x = 6;
 					}
 					if (this.color == "black") {
+						zones[bRook1.position - 3].appendChild(
+							zones[bRook1.position - 1].childNodes[0]
+						);
 						bRook1.x = 6;
 					}
 				}
 				//Long castling
 				if (this.x - newX == 2) {
+					console.log("in");
 					if (this.color == "white") {
-						zones[this.position - 1].appendChild(element);
+						zones[wRook2.position + 2].appendChild(
+							zones[wRook2.position - 1].childNodes[0]
+						);
 						wRook2.x = 4;
 					}
 					if (this.color == "black") {
+						zones[bRook2.position + 2].appendChild(
+							zones[bRook2.position - 1].childNodes[0]
+						);
 						bRook2.x = 4;
 					}
 				}
