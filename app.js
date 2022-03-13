@@ -1344,7 +1344,7 @@ let turn = "white";
 
 //White
 const wPawn1 = new Pawn(1, 7, "pawn", "white");
-const wPawn2 = new Pawn(2, 5, "pawn", "white");
+const wPawn2 = new Pawn(2, 7, "pawn", "white");
 const wPawn3 = new Pawn(3, 7, "pawn", "white");
 const wPawn4 = new Pawn(4, 7, "pawn", "white");
 const wPawn5 = new Pawn(5, 7, "pawn", "white");
@@ -1354,15 +1354,15 @@ const wPawn8 = new Pawn(8, 7, "pawn", "white");
 //Short side rook
 const wRook1 = new Rook(8, 8, "rook", "white");
 const wRook2 = new Rook(1, 8, "rook", "white");
-// const wBish1 = new Bishop(3, 8, "bishop", "white");
-// const wBish2 = new Bishop(6, 8, "bishop", "white");
-const wKnight1 = new Knight(3, 6, "knight", "white");
-const wKnight2 = new Knight(8, 6, "knight", "white");
+const wBish1 = new Bishop(3, 8, "bishop", "white");
+const wBish2 = new Bishop(6, 8, "bishop", "white");
+const wKnight1 = new Knight(2, 8, "knight", "white");
+const wKnight2 = new Knight(7, 8, "knight", "white");
 const wKing = new King(5, 8, "king", "white");
-// const wQueen = new Queen(5, 8, "queen", "white");
+const wQueen = new Queen(4, 8, "queen", "white");
 
 //Black
-const bPawn1 = new Pawn(1, 4, "pawn", "black");
+const bPawn1 = new Pawn(1, 2, "pawn", "black");
 const bPawn2 = new Pawn(2, 2, "pawn", "black");
 const bPawn3 = new Pawn(3, 2, "pawn", "black");
 const bPawn4 = new Pawn(4, 2, "pawn", "black");
