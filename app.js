@@ -4,6 +4,7 @@ class Board {
 		board.classList.add("board");
 		document.body.appendChild(board);
 		this.activeFigures = [[], []];
+		this.moves = [];
 	}
 	generate() {
 		let counter = 0;
@@ -49,6 +50,8 @@ class Board {
 		for (let i = 0; i < arr.length; i++) {
 			if (cordinate == arr[i].position) {
 				arr.splice(i, 1);
+				removedFigure = arr[i].img;
+				console.log(removedFigure);
 			}
 		}
 	}
@@ -122,6 +125,7 @@ class Figure {
 					zone.removeEventListener("click", prefix);
 				});
 				selected = false;
+				boardObj.moves.push([this.img, this.x, this.y]);
 				Board.toggleRound();
 			} else {
 				//Failed movement
@@ -1338,6 +1342,7 @@ const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 let selected = false;
 let active = undefined;
+let removedFigure = undefined;
 let turn = "white";
 
 //x - y - type - color
