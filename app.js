@@ -1338,6 +1338,9 @@ class King extends Figure {
 const boardObj = new Board();
 boardObj.generate();
 const board = document.querySelector(".board");
+const container = document.querySelector(".container");
+container.append(board);
+
 const zones = board.childNodes;
 let prefix = undefined; //Easy way to clear the event listener, unfortunately otherwise it's impossible
 let selected = false;
